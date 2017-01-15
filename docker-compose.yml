@@ -42,8 +42,8 @@ services:
         environment:
             - MYSQL_DATABASE=test
             - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_USER=student
-            - MYSQL_PASSWORD=0000
+            - MYSQL_USER=dev
+            - MYSQL_PASSWORD=1234
         ports:
             - 3306:3306
         volumes:

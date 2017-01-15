@@ -13,14 +13,14 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 * [PHP-FPM](https://hub.docker.com/r/nanoninja/php-fpm/) (635.9 MB)
 * [Composer](https://hub.docker.com/r/composer/composer/) (635.7 MB)
 * [PHPMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) (102.2 MB)
-* [generate-certificate](https://hub.docker.com/r/jacoelho/generate-certificate/) (9.07 MB)
+* [Generate Certificate](https://hub.docker.com/r/jacoelho/generate-certificate/) (9.07 MB)
 
 ## Start using it
 
 1. Download it :
 
     ```sh
-    git clone https://github.com/nanoninja/docker-nginx-php-mysql.git
+    $ git clone https://github.com/nanoninja/docker-nginx-php-mysql.git
     ```
 
 2. Run :
@@ -31,9 +31,9 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 
 3. Open your favorite browser :
 
-    * [http://localhost:8000](http://localhost:8000)
-    * [https://localhost:3000](https://localhost:3000) (not configured by default)
-    * [http://localhost:8080](http://localhost:8080) (phpmyadmin)
+    * [http://localhost:8000](http://localhost:8000/)
+    * [https://localhost:3000](https://localhost:3000/) (not configured by default)
+    * [phpMyAdmin](http://localhost:8080/) (user: dev, pass: 1234)
 
 ## Directory tree
 
@@ -74,13 +74,13 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 ## Updating composer
 
 ```sh
-docker run --rm -v $(pwd)/web/app:/app -v ~/.ssh:/root/.ssh composer/composer update
+$ docker run --rm -v $(pwd)/web/app:/app -v ~/.ssh:/root/.ssh composer/composer update
 ```
 
 ## MySQL Container shell access
 
 ```sh
-docker exec -it mysql bash
+$ docker exec -it mysql bash
 ```
 
 and
@@ -92,19 +92,19 @@ $ mysql -uroot -proot
 ## Creating database dumps
 
 ```sh
-docker exec mysql sh -c 'exec mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > /some/path/on/your/host/all-databases.sql
+$ docker exec mysql sh -c 'exec mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > /some/path/on/your/host/all-databases.sql
 ```
 
 or
 
 ```sh
-docker exec mysql sh -c 'exec mysqldump dbname -uroot -p"$MYSQL_ROOT_PASSWORD"' > /some/path/on/your/host/dbname.sql
+$ docker exec mysql sh -c 'exec mysqldump dbname -uroot -p"$MYSQL_ROOT_PASSWORD"' > /some/path/on/your/host/dbname.sql
 ```
 
 ### Example
 
 ```sh
-docker exec mysql sh -c 'exec mysqldump test -uroot -p"$MYSQL_ROOT_PASSWORD"' > $(pwd)/data/db/dumps/test.sql
+$ docker exec mysql sh -c 'exec mysqldump test -uroot -p"$MYSQL_ROOT_PASSWORD"' > $(pwd)/data/db/dumps/test.sql
 ```
 
 ## Generating SSL certificates
@@ -112,7 +112,7 @@ docker exec mysql sh -c 'exec mysqldump test -uroot -p"$MYSQL_ROOT_PASSWORD"' > 
 1. Generate certificates
 
     ```sh
-    docker run --rm -v $(pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
+    $ docker run --rm -v $(pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
     ```
 
 2. Configure Nginx
@@ -128,5 +128,5 @@ docker exec mysql sh -c 'exec mysqldump test -uroot -p"$MYSQL_ROOT_PASSWORD"' > 
 ## Cleaning project
 
 ```sh
-./bin/linux/clean.sh $(pwd)
+$ ./bin/linux/clean.sh $(pwd)
 ```
