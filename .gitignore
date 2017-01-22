@@ -1,0 +1,6 @@
+*.exe
+*.exe~
+*.orig
+*.test
+.*.swp
+.DS_Store
