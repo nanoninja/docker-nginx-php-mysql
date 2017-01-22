@@ -32,7 +32,7 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 3. Open your favorite browser :
 
     * [http://localhost:8000](http://localhost:8000/)
-    * [https://localhost:3000](https://localhost:3000/) (not configured by default)
+    * [https://localhost:3000](https://localhost:3000/) ([HTTPS](https://github.com/nanoninja/docker-nginx-php-mysql#generating-ssl-certificates) not configured by default)
     * [phpMyAdmin](http://localhost:8080/) (user: dev, pass: dev)
 
 ## Directory tree
