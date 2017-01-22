@@ -43,7 +43,7 @@ services:
             - MYSQL_DATABASE=test
             - MYSQL_ROOT_PASSWORD=root
             - MYSQL_USER=dev
-            - MYSQL_PASSWORD=1234
+            - MYSQL_PASSWORD=dev
         ports:
             - 3306:3306
         volumes:

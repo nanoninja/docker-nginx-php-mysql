@@ -8,12 +8,12 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 
 ## Images to use
 
-* [Nginx](https://hub.docker.com/_/nginx/) (181.85 MB)
-* [MySQL](https://hub.docker.com/_/mysql/) (400.2 MB)
-* [PHP-FPM](https://hub.docker.com/r/nanoninja/php-fpm/) (635.9 MB)
-* [Composer](https://hub.docker.com/r/composer/composer/) (635.7 MB)
-* [PHPMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/) (102.2 MB)
-* [Generate Certificate](https://hub.docker.com/r/jacoelho/generate-certificate/) (9.07 MB)
+* [Nginx](https://hub.docker.com/_/nginx/)
+* [MySQL](https://hub.docker.com/_/mysql/)
+* [PHP-FPM](https://hub.docker.com/r/nanoninja/php-fpm/)
+* [Composer](https://hub.docker.com/r/composer/composer/)
+* [PHPMyAdmin](https://hub.docker.com/r/phpmyadmin/phpmyadmin/)
+* [Generate Certificate](https://hub.docker.com/r/jacoelho/generate-certificate/)
 
 ## Start using it
 
@@ -38,7 +38,7 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 ## Directory tree
 
 ```sh
-.
+docker-nginx-php-mysql
 ├── bin
 │   └── linux
 │       └── clean.sh
@@ -67,7 +67,7 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 ```php
 <?php
     $dsn = 'mysql:host=mysql;dbname=test;charset=utf8;port=3306';
-    $pdo = new PDO($dsn, 'root', 'root');
+    $pdo = new PDO($dsn, 'dev', 'dev');
 ?>
 ```
 
@@ -120,9 +120,9 @@ $ docker exec mysql sh -c 'exec mysqldump test -uroot -p"$MYSQL_ROOT_PASSWORD"' 
     Edit nginx file **etc/nginx/default.conf** and uncomment the server section.
 
     ```nginx
-    server {
-        ...
-    }
+    # server {
+    #     ...
+    # }
     ```
 
 ## Cleaning project
