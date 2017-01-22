@@ -33,7 +33,7 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 
     * [http://localhost:8000](http://localhost:8000/)
     * [https://localhost:3000](https://localhost:3000/) (not configured by default)
-    * [phpMyAdmin](http://localhost:8080/) (user: dev, pass: 1234)
+    * [phpMyAdmin](http://localhost:8080/) (user: dev, pass: dev)
 
 ## Directory tree
 
