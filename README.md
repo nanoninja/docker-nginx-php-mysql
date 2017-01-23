@@ -38,7 +38,7 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 ## Directory tree
 
 ```sh
-docker-nginx-php-mysql
+├── README.md
 ├── bin
 │   └── linux
 │       └── clean.sh
@@ -56,8 +56,12 @@ docker-nginx-php-mysql
 └── web
     ├── app
     │   ├── composer.json
+    │   ├── phpunit.xml.dist
     │   ├── src
-    │   └── tests
+    │   │   └── Foo.php
+    │   └── test
+    │       ├── FooTest.php
+    │       └── bootstrap.php
     └── public
         └── index.php
 ```
@@ -124,6 +128,12 @@ $ docker exec mysql sh -c 'exec mysqldump test -uroot -p"$MYSQL_ROOT_PASSWORD"' 
     #     ...
     # }
     ```
+
+## Generating API Documentation
+
+```sh
+./web/app/vendor/apigen/apigen/bin/apigen generate -s web/app/src -d web/app/doc
+```
 
 ## Cleaning project
 
