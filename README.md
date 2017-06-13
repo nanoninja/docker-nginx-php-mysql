@@ -21,6 +21,7 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 
     ```sh
     $ git clone https://github.com/nanoninja/docker-nginx-php-mysql.git
+    $ cd docker-nginx-php-mysql
     ```
 
 2. Copying the composer configuration file : 
