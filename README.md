@@ -23,13 +23,20 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
     $ git clone https://github.com/nanoninja/docker-nginx-php-mysql.git
     ```
 
-2. Run :
+2. Copying the composer configuration file : 
+
+    ```sh
+    # Convenient to avoid overwriting the configuration with Git.
+    $ cp web/app/composer.json.dist web/app/composer.json
+    ```
+
+3. Run :
 
     ```sh
     $ docker-compose up -d
     ```
 
-3. Open your favorite browser :
+4. Open your favorite browser :
 
     * [http://localhost:8000](http://localhost:8000/)
     * [https://localhost:3000](https://localhost:3000/) ([HTTPS](https://github.com/nanoninja/docker-nginx-php-mysql#generating-ssl-certificates) not configured by default)
@@ -42,20 +49,15 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 ├── bin
 │   └── linux
 │       └── clean.sh
-├── data
-│   └── db
-│       ├── dumps
-│       └── mysql
 ├── docker-compose.yml
 ├── etc
 │   ├── nginx
 │   │   └── default.conf
-│   ├── php
-│   │   └── php.ini
-│   └── ssl
+│   └── php
+│       └── php.ini
 └── web
     ├── app
-    │   ├── composer.json
+    │   ├── composer.json.dist
     │   ├── phpunit.xml.dist
     │   ├── src
     │   │   └── Foo.php
