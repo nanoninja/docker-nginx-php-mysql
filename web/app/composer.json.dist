@@ -1,0 +1,22 @@
+{
+    "require": {
+
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "2.*",
+        "phpunit/phpunit": "5.7.*",
+        "apigen/apigen": "^4.1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Acme\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AppTest\\Acme\\": "test/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

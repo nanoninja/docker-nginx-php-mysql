@@ -1,6 +1,3 @@
-*.exe
-*.exe~
-*.orig
-*.test
 .*.swp
 .DS_Store
+web/app/composer.json
