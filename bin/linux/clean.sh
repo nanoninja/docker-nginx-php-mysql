@@ -16,5 +16,7 @@ rm -Rf $DATA_PATH/dumps/*
 rm -Rf $APP_PATH/vendor
 rm -Rf $APP_PATH/composer.lock
 
-docker rm -f $(docker ps -aq)
+# remove exited containers:
+docker rm $(docker ps -a -f status=exited -q)
+
 docker volume rm $(docker volume ls -qf dangling=true)
