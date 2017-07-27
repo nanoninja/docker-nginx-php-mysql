@@ -1,28 +1,28 @@
-version: '2'
+version: '3'
 services:
     web:
         image: nginx:latest
         ports:
             - "8000:80"
             - "3000:443"
-        restart: always
+        restart: always     
         volumes:
             - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
             - "./etc/ssl:/etc/ssl"
             - "./web:/web"
         depends_on:
-            - "php"
-            - "mysqldb"
+            - php
+            - mysqldb
     php:
         image: nanoninja/php-fpm
         restart: always
         volumes:
             - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
-            - ./web:/web
+            - "./web:/var/www/html"
     composer:
         image: composer/composer
         volumes:
-            - ./web/app:/app
+            - "./web/app:/app"
         command: install
     myadmin:
         image: phpmyadmin/phpmyadmin
@@ -34,17 +34,19 @@ services:
             - PMA_HOST=mysql
         restart: always
         depends_on:
-            - "mysqldb"
+            - mysqldb
     mysqldb:
         image: mysql
         container_name: mysql
         restart: always
+        env_file:
+            - ".env"
         environment:
-            - MYSQL_DATABASE=test
-            - MYSQL_ROOT_PASSWORD=root
-            - MYSQL_USER=dev
-            - MYSQL_PASSWORD=dev
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         ports:
-            - 3306:3306
+            - "3306:3306"
         volumes:
-            - ./data/db/mysql:/var/lib/mysql
+            - "./data/db/mysql:/var/lib/mysql"
