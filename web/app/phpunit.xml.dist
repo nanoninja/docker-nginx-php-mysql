@@ -3,7 +3,7 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="test/bootstrap.php"
-         colors="true">
+         colors="always">
 
     <testsuites>
         <testsuite name="PHP Test suite">
@@ -24,4 +24,8 @@
         <ini name="date.timezone" value="UTC"/>
     </php>
 
+    <logging>
+        <log type="coverage-html" target="./report/phpunit" charset="UTF-8"
+            yui="true" highlight="true"/>
+    </logging>
 </phpunit>
