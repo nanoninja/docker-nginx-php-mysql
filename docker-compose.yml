@@ -9,7 +9,7 @@ services:
         volumes:
             - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
             - "./etc/ssl:/etc/ssl"
-            - "./web:/web"
+            - "./web:/var/www/html"
         depends_on:
             - php
             - mysqldb

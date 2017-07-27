@@ -1,10 +1,6 @@
 # Nginx PHP MySQL
 
-Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
-
-**THIS ENVIRONMENT SHOULD ONLY BE USED FOR DEVELOPMENT!**
-
-**DO NOT USE IT IN PRODUCTION!**
+Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
 ## Images to use
 
@@ -20,22 +16,24 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 1. Download it :
 
     ```sh
-    $ git clone https://github.com/nanoninja/docker-nginx-php-mysql.git
-    $ cd docker-nginx-php-mysql
+    git clone https://github.com/nanoninja/docker-nginx-php-mysql.git
+
+    cd docker-nginx-php-mysql
     ```
 
 2. Copying the composer configuration file : 
 
     ```sh
-    # Convenient to avoid overwriting the configuration with Git.
-    $ cp web/app/composer.json.dist web/app/composer.json
+    cp web/app/composer.json.dist web/app/composer.json
     ```
 
-3. Run :
+3. Start :
 
     ```sh
-    $ docker-compose up -d
+    docker-compose up -d
     ```
+
+    **Please wait this might take a several minutes...**
 
 4. Open your favorite browser :
 
@@ -43,28 +41,62 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
     * [https://localhost:3000](https://localhost:3000/) ([HTTPS](https://github.com/nanoninja/docker-nginx-php-mysql#generating-ssl-certificates) not configured by default)
     * [phpMyAdmin](http://localhost:8080/) (user: dev, pass: dev)
 
+5. Stop :
+
+    ```sh
+    docker-compose stop
+    docker-compose kill
+    docker-compose rm -f
+    ```
+
+## Using Makefile
+
+When developing, you can use the Makefile for doing the following operations :
+
+### Makefile
+
+| Name          | Description                       |
+|---------------|-----------------------------------|
+| apidoc        | Generate documentation of API     |
+| clean         | Clean directories for reset       |
+| composer-up   | Update php composer               |
+| docker-start  | Create and start containers       |
+| docker-stop   | Stop all services                 |
+| docker-sweep  | Sweep old containers and volumes  |
+| gen-certs     | Generate SSL certificates         |
+| mysql-dump    | Create backup of whole database   |
+| mysql-restore | Restore backup from whole databas |
+| test          | Test application                  |
+
 ## Directory tree
 
 ```sh
+.
+├── Makefile
 ├── README.md
 ├── bin
-│   └── linux
-│       └── clean.sh
+│   └── linux
+│       └── clean.sh
+├── data
+│   └── db
+│       └── mysql
 ├── docker-compose.yml
 ├── etc
-│   ├── nginx
-│   │   └── default.conf
-│   └── php
-│       └── php.ini
+│   ├── nginx
+│   │   └── default.conf
+│   ├── php
+│   │   └── php.ini
+│   └── ssl
 └── web
     ├── app
-    │   ├── composer.json.dist
-    │   ├── phpunit.xml.dist
-    │   ├── src
-    │   │   └── Foo.php
-    │   └── test
-    │       ├── FooTest.php
-    │       └── bootstrap.php
+    │   ├── composer.json
+    │   ├── composer.json.dist
+    │   ├── phpunit.xml.dist
+    │   ├── src
+    │   │   └── Foo.php
+    │   └── test
+    │       ├── FooTest.php
+    │       └── bootstrap.php
     └── public
         └── index.php
 ```
@@ -81,37 +113,31 @@ Docker running Nginx, PHP-FPM, MySQL and PHPMyAdmin.
 ## Updating composer
 
 ```sh
-$ docker run --rm -v $(pwd)/web/app:/app -v ~/.ssh:/root/.ssh composer/composer update
+docker run --rm -v $(PWD)/web/app:/app composer/composer update
 ```
 
 ## MySQL Container shell access
 
 ```sh
-$ docker exec -it mysql bash
+docker exec -it mysql bash
 ```
 
 and
 
 ```sh
-$ mysql -uroot -proot
+mysql -uroot -proot
 ```
 
 ## Creating database dumps
 
 ```sh
-$ docker exec mysql sh -c 'exec mysqldump --all-databases -uroot -p"$MYSQL_ROOT_PASSWORD"' > /some/path/on/your/host/all-databases.sql
+source .env && docker exec -i $(docker-compose ps -q mysqldb) mysqldump --all-databases -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" > "$MYSQL_DUMPS_DIR/db.sql"
 ```
 
 or
 
 ```sh
-$ docker exec mysql sh -c 'exec mysqldump dbname -uroot -p"$MYSQL_ROOT_PASSWORD"' > /some/path/on/your/host/dbname.sql
-```
-
-### Example
-
-```sh
-$ docker exec mysql sh -c 'exec mysqldump test -uroot -p"$MYSQL_ROOT_PASSWORD"' > $(pwd)/data/db/dumps/test.sql
+source .env && docker exec -i $(docker-compose ps -q mysqldb) mysqldump test -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" > "$MYSQL_DUMPS_DIR/test.sql"
 ```
 
 ## Generating SSL certificates
@@ -119,12 +145,12 @@ $ docker exec mysql sh -c 'exec mysqldump test -uroot -p"$MYSQL_ROOT_PASSWORD"' 
 1. Generate certificates
 
     ```sh
-    $ docker run --rm -v $(pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
+    docker run --rm -v $(PWD)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
     ```
 
 2. Configure Nginx
 
-    Edit nginx file **etc/nginx/default.conf** and uncomment the server section.
+    Edit nginx file **etc/nginx/default.conf** and uncomment the server section :
 
     ```nginx
     # server {
@@ -135,11 +161,11 @@ $ docker exec mysql sh -c 'exec mysqldump test -uroot -p"$MYSQL_ROOT_PASSWORD"' 
 ## Generating API Documentation
 
 ```sh
-./web/app/vendor/apigen/apigen/bin/apigen generate -s web/app/src -d web/app/doc
+docker exec -i $(docker-compose ps -q php) php ./app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
 ```
 
 ## Cleaning project
 
 ```sh
-$ ./bin/linux/clean.sh $(pwd)
+./bin/linux/clean.sh $(pwd)
 ```
