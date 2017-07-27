@@ -44,29 +44,25 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 5. Stop :
 
     ```sh
-    docker-compose stop
-    docker-compose kill
-    docker-compose rm -f
+    docker-compose stop && docker-compose kill && docker-compose rm -f
     ```
 
-## Using Makefile
+## Makefile
 
-When developing, you can use the Makefile for doing the following operations :
+When developing, you can use the [Makefile](https://en.wikipedia.org/wiki/Make_(software)) for doing the following operations :
 
-### Makefile
-
-| Name          | Description                       |
-|---------------|-----------------------------------|
-| apidoc        | Generate documentation of API     |
-| clean         | Clean directories for reset       |
-| composer-up   | Update php composer               |
-| docker-start  | Create and start containers       |
-| docker-stop   | Stop all services                 |
-| docker-sweep  | Sweep old containers and volumes  |
-| gen-certs     | Generate SSL certificates         |
-| mysql-dump    | Create backup of whole database   |
-| mysql-restore | Restore backup from whole databas |
-| test          | Test application                  |
+| Name          | Description                             |
+|---------------|-----------------------------------------|
+| apidoc        | Generate documentation of API           |
+| clean         | Clean directories for reset             |
+| composer-up   | Update php composer                     |
+| docker-start  | Create and start containers             |
+| docker-stop   | Stop all services                       |
+| docker-sweep  | Sweep old containers and volumes        |
+| gen-certs     | Generate SSL certificates for **nginx** |
+| mysql-dump    | Create backup of whole database         |
+| mysql-restore | Restore backup from whole database      |
+| test          | Test application with phpunit           |
 
 ## Directory tree
 
@@ -89,7 +85,6 @@ When developing, you can use the Makefile for doing the following operations :
 │   └── ssl
 └── web
     ├── app
-    │   ├── composer.json
     │   ├── composer.json.dist
     │   ├── phpunit.xml.dist
     │   ├── src
