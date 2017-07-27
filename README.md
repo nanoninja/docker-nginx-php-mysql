@@ -64,6 +64,18 @@ When developing, you can use the [Makefile](https://en.wikipedia.org/wiki/Make_(
 | mysql-restore | Restore backup from whole database      |
 | test          | Test application with phpunit           |
 
+### Example :
+
+```sh
+make docker-start
+```
+
+Show help
+
+```sh
+make help
+```
+
 ## Directory tree
 
 ```sh
