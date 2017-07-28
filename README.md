@@ -206,7 +206,7 @@ sudo make docker-start
 Show help :
 
 ```sh
-sudo make help
+make help
 ```
 
 ---
