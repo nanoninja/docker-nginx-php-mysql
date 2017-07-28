@@ -71,7 +71,7 @@ This project use the following ports :
 
 | Server    | Port |
 |-----------|------|
-| MySQL     | 3306 |
+| MySQL     | 8989 |
 | Nginx     | 8000 |
 | Nginx SSL | 3000 |
 
@@ -102,6 +102,7 @@ cd docker-nginx-php-mysql
 │       └── clean.sh
 ├── data
 │   └── db
+│       ├── dumps
 │       └── mysql
 ├── docker-compose.yml
 ├── etc
@@ -194,6 +195,7 @@ When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(soft
 | docker-start  | Create and start containers           |
 | docker-stop   | Stop all services                     |
 | gen-certs     | Generate SSL certificates for `nginx` |
+| logs          | Follow log output                     |
 | mysql-dump    | Create backup of whole database       |
 | mysql-restore | Restore backup from whole database    |
 | test          | Test application with phpunit         |
