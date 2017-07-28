@@ -15,16 +15,17 @@ help:
 	@echo "  composer-up         Update php composer"
 	@echo "  docker-start        Create and start containers"
 	@echo "  docker-stop         Stop all services"
-	@echo "  gen-certs            Generate SSL certificates"
+	@echo "  gen-certs           Generate SSL certificates"
+	@echo "  logs                Follow log output"
 	@echo "  mysql-dump          Create backup of whole database"
 	@echo "  mysql-restore       Restore backup from whole database"
 	@echo "  test                Test application"
 
 init:
-	@cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json
+	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
 
 apidoc:
-	@docker exec -i $(shell docker-compose ps -q php) php $(shell pwd)/app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
+	@docker exec -i $(shell docker-compose ps -q php) php ./app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
 	@make resetOwner
 
 clean:
@@ -51,6 +52,9 @@ docker-stop:
 
 gen-certs:
 	@docker run --rm -v $(shell pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
+
+logs:
+	@docker-compose logs -f
 
 mysql-dump:
 	@mkdir -p $(MYSQL_DUMPS_DIR)
