@@ -38,7 +38,7 @@ clean:
 	@rm -Rf etc/ssl/*
 
 composer-up:
-	@docker run --rm -v $(pwd)/web/app:/app composer/composer update
+	@docker run --rm -v $(shell pwd)/web/app:/app composer/composer update
 
 docker-start: init
 	@echo "Docker is running..."
@@ -55,7 +55,7 @@ docker-sweep:
 	@docker volume ls -qf dangling=true | xargs docker volume rm
 
 gen-certs:
-	@docker run --rm -v $(pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
+	@docker run --rm -v $(shell pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
 
 mysql-dump:
 	@mkdir -p $(MYSQL_DUMPS_DIR)
