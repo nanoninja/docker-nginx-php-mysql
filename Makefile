@@ -3,6 +3,8 @@
 # config environment
 include .env
 
+MYSQL_DUMPS_DIR=data/db/dumps
+
 help:
 	@echo ""
 	@echo "usage: make COMMAND"
@@ -20,14 +22,14 @@ help:
 	@echo "  test                Test application"
 
 init:
-	@$(shell cp -n $(PWD)/web/app/composer.json.dist $(PWD)/web/app/composer.json)
+	@$(shell cp -n $(pwd)/web/app/composer.json.dist $(pwd)/web/app/composer.json)
 
 apidoc:
 	@docker exec -i $(shell docker-compose ps -q php) php ./app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
 
 clean:
 	@rm -Rf data/db/mysql/*
-	@rm -Rf data/db/dumps/*
+	@rm -Rf $MYSQL_DUMPS_DIR/*
 	@rm -Rf web/app/vendor
 	@rm -Rf web/app/composer.lock
 	@rm -Rf web/app/doc
@@ -35,7 +37,7 @@ clean:
 	@rm -Rf etc/ssl/*
 
 composer-up:
-	@docker run --rm -v $(PWD)/web/app:/app composer/composer update
+	@docker run --rm -v $(pwd)/web/app:/app composer/composer update
 
 docker-start: init
 	@echo "Docker is running..."
@@ -52,7 +54,7 @@ docker-sweep:
 	@docker volume ls -qf dangling=true | xargs docker volume rm
 
 gen-certs:
-	@docker run --rm -v $(PWD)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
+	@docker run --rm -v $(pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
 
 mysql-dump:
 	@mkdir -p $(MYSQL_DUMPS_DIR)
