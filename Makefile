@@ -22,7 +22,7 @@ help:
 	@echo "  test                Test application"
 
 init:
-	@$(shell cp -n $(pwd)/web/app/composer.json.dist $(pwd)/web/app/composer.json)
+	@cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json
 
 apidoc:
 	@docker exec -i $(shell docker-compose ps -q php) php ./app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
