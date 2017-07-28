@@ -15,7 +15,6 @@ help:
 	@echo "  composer-up         Update php composer"
 	@echo "  docker-start        Create and start containers"
 	@echo "  docker-stop         Stop all services"
-	@echo "  docker-sweep        Sweep old containers and volumes"
 	@echo "  gen-certs            Generate SSL certificates"
 	@echo "  mysql-dump          Create backup of whole database"
 	@echo "  mysql-restore       Restore backup from whole database"
@@ -26,10 +25,11 @@ init:
 
 apidoc:
 	@docker exec -i $(shell docker-compose ps -q php) php $(shell pwd)/app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
+	@make resetOwner
 
 clean:
 	@rm -Rf data/db/mysql/*
-	@rm -Rf $MYSQL_DUMPS_DIR/*
+	@rm -Rf $(MYSQL_DUMPS_DIR)/*
 	@rm -Rf web/app/vendor
 	@rm -Rf web/app/composer.lock
 	@rm -Rf web/app/doc
@@ -49,10 +49,6 @@ docker-stop:
 	@docker-compose rm -f
 	@make clean
 
-docker-sweep:
-	@docker ps -aq | xargs docker rm
-	@docker volume ls -qf dangling=true | xargs docker volume rm
-
 gen-certs:
 	@docker run --rm -v $(shell pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
 
@@ -65,9 +61,10 @@ mysql-restore:
 	@docker exec -i mysql mysql -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" < $(MYSQL_DUMPS_DIR)/db.sql
 
 test:
-	@docker exec -i $(shell docker-compose ps -q php) $(shell pwd)/app/vendor/bin/phpunit --colors=always --configuration app/
+	@docker exec -i $(shell docker-compose ps -q php) ./app/vendor/bin/phpunit --colors=always --configuration app/
+	@make resetOwner
 
 resetOwner:
-        @$(shell chown -Rf $(SUDO_USER):$(shell id -g -n $(SUDO_USER)) $(MYSQL_DUMPS_DIR) "$(shell pwd)/etc/ssl" "$(shell pwd)/web/app" 2> /dev/null)
+	@$(shell chown -Rf $(SUDO_USER):$(shell id -g -n $(SUDO_USER)) $(MYSQL_DUMPS_DIR) "$(shell pwd)/etc/ssl" "$(shell pwd)/web/app" 2> /dev/null)
 
 .PHONY: clean
