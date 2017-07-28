@@ -164,6 +164,10 @@ cd docker-nginx-php-mysql
 
     **Please wait this might take a several minutes...**
 
+    ```sh
+    sudo docker-compose logs -f # Follow log output
+    ```
+
 3. Open your favorite browser :
 
     * [http://localhost:8000](http://localhost:8000/)
@@ -182,18 +186,17 @@ cd docker-nginx-php-mysql
 
 When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(software)) for doing the following operations :
 
-| Name          | Description                             |
-|---------------|-----------------------------------------|
-| apidoc        | Generate documentation of API           |
-| clean         | Clean directories for reset             |
-| composer-up   | Update php composer                     |
-| docker-start  | Create and start containers             |
-| docker-stop   | Stop all services                       |
-| docker-sweep  | Sweep old containers and volumes        |
-| gen-certs     | Generate SSL certificates for **nginx** |
-| mysql-dump    | Create backup of whole database         |
-| mysql-restore | Restore backup from whole database      |
-| test          | Test application with phpunit           |
+| Name          | Description                           |
+|---------------|---------------------------------------|
+| apidoc        | Generate documentation of API         |
+| clean         | Clean directories for reset           |
+| composer-up   | Update php composer                   |
+| docker-start  | Create and start containers           |
+| docker-stop   | Stop all services                     |
+| gen-certs     | Generate SSL certificates for `nginx` |
+| mysql-dump    | Create backup of whole database       |
+| mysql-restore | Restore backup from whole database    |
+| test          | Test application with phpunit         |
 
 ### Examples
 
