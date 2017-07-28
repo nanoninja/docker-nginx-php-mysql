@@ -1,6 +1,5 @@
 # Makefile for Docker Nginx PHP Composer MySQL
 
-# config environment
 include .env
 
 # MySQL
@@ -26,7 +25,7 @@ init:
 	@cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json
 
 apidoc:
-	@docker exec -i $(shell docker-compose ps -q php) php ./app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
+	@docker exec -i $(shell docker-compose ps -q php) php $(shell pwd)/app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
 
 clean:
 	@rm -Rf data/db/mysql/*
@@ -40,14 +39,14 @@ clean:
 composer-up:
 	@docker run --rm -v $(shell pwd)/web/app:/app composer/composer update
 
-docker-start: init
+docker-start:
 	@echo "Docker is running..."
-	docker-compose up -d;
+	docker-compose up -d
 
 docker-stop:
-	docker-compose stop
-	docker-compose kill
-	docker-compose rm -f
+	@docker-compose stop
+	@docker-compose kill
+	@docker-compose rm -f
 	@make clean
 
 docker-sweep:
@@ -60,14 +59,15 @@ gen-certs:
 mysql-dump:
 	@mkdir -p $(MYSQL_DUMPS_DIR)
 	@docker exec -i $(shell docker-compose ps -q mysqldb) mysqldump --all-databases -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" > $(MYSQL_DUMPS_DIR)/db.sql
+	@make resetOwner
 
 mysql-restore:
 	@docker exec -i mysql mysql -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" < $(MYSQL_DUMPS_DIR)/db.sql
 
 test:
-	@docker exec -i $(shell docker-compose ps -q php) app/vendor/bin/phpunit --colors=always --configuration app/
+	@docker exec -i $(shell docker-compose ps -q php) $(shell pwd)/app/vendor/bin/phpunit --colors=always --configuration app/
 
-tearDown:
-	chown -Rf "$(shell whoami):$(shell id -g -n $(whoami))" data web/app
+resetOwner:
+        @$(shell chown -Rf $(SUDO_USER):$(shell id -g -n $(SUDO_USER)) $(MYSQL_DUMPS_DIR) "$(shell pwd)/etc/ssl" "$(shell pwd)/web/app" 2> /dev/null)
 
 .PHONY: clean
