@@ -3,6 +3,7 @@
 # config environment
 include .env
 
+# MySQL
 MYSQL_DUMPS_DIR=data/db/dumps
 
 help:
@@ -16,7 +17,7 @@ help:
 	@echo "  docker-start        Create and start containers"
 	@echo "  docker-stop         Stop all services"
 	@echo "  docker-sweep        Sweep old containers and volumes"
-	@echo "  gencerts            Generate SSL certificates"
+	@echo "  gen-certs            Generate SSL certificates"
 	@echo "  mysql-dump          Create backup of whole database"
 	@echo "  mysql-restore       Restore backup from whole database"
 	@echo "  test                Test application"
@@ -65,5 +66,8 @@ mysql-restore:
 
 test:
 	@docker exec -i $(shell docker-compose ps -q php) app/vendor/bin/phpunit --colors=always --configuration app/
+
+tearDown:
+	chown -Rf "$(shell whoami):$(shell id -g -n $(whoami))" data web/app
 
 .PHONY: clean
