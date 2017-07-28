@@ -225,7 +225,7 @@ sudo docker run --rm -v $(pwd)/web/app:/app composer/composer update
 sudo docker exec -i $(sudo docker-compose ps -q php) php ./app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
 ```
 
-### Testing PHP application
+### Testing PHP application with PHPUnit
 
 ```sh
 sudo docker exec -i $(sudo docker-compose ps -q php) app/vendor/bin/phpunit --colors=always --configuration app/
@@ -265,8 +265,12 @@ source .env && sudo docker exec -i mysql mysqldump test -u"$MYSQL_ROOT_USER" -p"
 
 ```php
 <?php
-    $dsn = 'mysql:host=mysql;dbname=test;charset=utf8;port=3306';
-    $pdo = new PDO($dsn, 'dev', 'dev');
+    try {
+        $dsn = 'mysql:host=mysql;dbname=test;charset=utf8;port=3306';
+        $pdo = new PDO($dsn, 'dev', 'dev');
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
 ?>
 ```
 
