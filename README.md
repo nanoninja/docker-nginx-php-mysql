@@ -4,8 +4,6 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
 ## Overview
 
----
-
 1. [Install prerequisites](#install-prerequisites)
 
     Before installing project make sure the following prerequisites have been met.
@@ -77,6 +75,8 @@ This project use the following ports :
 | Nginx     | 8000 |
 | Nginx SSL | 3000 |
 
+---
+
 ## Clone the project
 
 To install [Git](http://git-scm.com/book/en/v2/Getting-Started-Installing-Git), download it and install following the instructions : 
@@ -123,12 +123,14 @@ cd docker-nginx-php-mysql
         └── index.php
 ```
 
+---
+
 ## Configure Nginx With SSL Certificates
 
 1. Generate SSL certificates
 
     ```sh
-    docker run --rm -v $(PWD)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
+    sudo docker run --rm -v $(pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
     ```
 
 2. Configure Nginx
@@ -143,6 +145,8 @@ cd docker-nginx-php-mysql
     #     ...
     # }
     ```
+
+---
 
 ## Run the application
 
@@ -172,9 +176,11 @@ cd docker-nginx-php-mysql
     sudo docker-compose stop && sudo docker-compose kill && sudo docker-compose rm -f
     ```
 
+---
+
 ## Use Makefile
 
-When developing, you can use the [Makefile](https://en.wikipedia.org/wiki/Make_(software)) for doing the following operations :
+When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(software)) for doing the following operations :
 
 | Name          | Description                             |
 |---------------|-----------------------------------------|
@@ -202,6 +208,8 @@ Show help :
 ```sh
 sudo make help
 ```
+
+---
 
 ## Use Docker commands
 
@@ -262,9 +270,9 @@ source .env && sudo docker exec -i mysql mysqldump test -u"$MYSQL_ROOT_USER" -p"
 ?>
 ```
 
-## Help us !
-
 ---
+
+## Help us !
 
 Any thought, feedback or (hopefully not!)
 
