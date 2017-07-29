@@ -13,17 +13,13 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
+  - make init
 
 before_script:
   - make docker-start
-  - sleep 3m
-  - docker inspect -f {{.Config.Volumes}} $(docker-compose ps -q php)
-  - ls -lah
+  - sleep 2m
   - ls -lah web/app
-  - ls -lah web/app/vendor/apigen/apigen
-  - docker-compose logs --tail="all"
 
 script:
   - make travis
-  - make composer-up
   - make apidoc
