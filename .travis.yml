@@ -19,8 +19,8 @@ before_script:
   - make docker-start
   - sleep 3m
   - docker inspect -f {{.Config.Volumes}} $(docker-compose ps -q php)
+  - ls -lah
 
 script:
-  - ls $(pwd)/web/app/vendor
   - make apidoc
   - make test
