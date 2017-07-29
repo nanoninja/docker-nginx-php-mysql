@@ -16,12 +16,12 @@ before_install:
 
 before_script:
   - make docker-start
-  - sleep 30s
+  - sleep 1m && sleep 30s
 
 script:
+  - make gen-certs
   - make apidoc
   - make test
-  - make gen-certs
   - make mysql-dump
 
 before_script:
