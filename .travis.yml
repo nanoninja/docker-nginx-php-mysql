@@ -1,4 +1,4 @@
-#sudo: required
+sudo: required
 
 env:
   DOCKER_COMPOSE_VERSION: 1.14.0

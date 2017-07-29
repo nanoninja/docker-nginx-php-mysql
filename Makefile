@@ -57,7 +57,7 @@ logs:
 	@docker-compose logs -f
 
 mysql-dump:
-	@mkdir -p $(MYSQL_DUMPS_DIR) ; make resetOwner
+	@mkdir -p $(MYSQL_DUMPS_DIR)
 	@docker exec $(shell docker-compose ps -q mysqldb) mysqldump --all-databases -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" > $(MYSQL_DUMPS_DIR)/db.sql
 	@make resetOwner
 
