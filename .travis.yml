@@ -15,12 +15,9 @@ before_install:
   - docker-compose --version
 
 before_script:
-  - echo $(pwd)
   - make docker-start
-  - sleep 3m
+  - sleep 2m
   - docker inspect -f {{.Config.Volumes}} $(docker-compose ps -q php)
-  - ls -lah
 
 script:
   - make apidoc
-  - make test

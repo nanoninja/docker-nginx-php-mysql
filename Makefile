@@ -28,7 +28,7 @@ init:
 	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
 
 apidoc:
-	@docker exec -i $(shell docker-compose ps -q php) app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
+	@docker exec $(shell docker-compose ps -q php) sh -c 'exec app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc'
 	@make resetOwner
 
 clean:
