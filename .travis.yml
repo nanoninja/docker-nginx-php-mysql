@@ -16,8 +16,11 @@ before_install:
 
 before_script:
   - make docker-start
-  - sleep 3m
+  - sleep 5m
   - docker inspect -f {{.Config.Volumes}} $(docker-compose ps -q php)
+  - ls -lah
+  - ls -lah app
+  - ls -lah app/vendor/apigen/apigen
 
 script:
   - make travis
