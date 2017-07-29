@@ -43,7 +43,7 @@ clean:
 composer-up:
 	@docker run --rm -v $(shell pwd)/web/app:/app composer/composer update
 
-docker-start:
+docker-start: init
 	@echo "Docker is running..."
 	docker-compose up -d
 

@@ -13,12 +13,16 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
-  - make init
 
 before_script:
   - make docker-start
-  - sleep 1m
+  - sleep 30s
 
 script:
   - make apidoc
   - make test
+  - make gen-certs
+  - make mysql-dump
+
+before_script:
+  - make docker-stop
