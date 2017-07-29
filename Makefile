@@ -27,8 +27,11 @@ help:
 init:
 	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
 
+travis:
+	@docker exec $(shell docker-compose ps -q php) php -r 'echo getcwd(); var_dump(file_exists("app/vendor/apigen/apigen/bin/apigen"));'
+
 apidoc:
-	@docker exec $(shell docker-compose ps -q php) sh -c 'exec app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc'
+	@docker exec $(shell docker-compose ps -q php) app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
 	@make resetOwner
 
 clean:
@@ -68,7 +71,7 @@ mysql-restore:
 	@docker exec -i mysql mysql -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" < $(MYSQL_DUMPS_DIR)/db.sql
 
 test:
-	@docker exec -i $(shell docker-compose ps -q php) php app/vendor/bin/phpunit --colors=always --configuration app/
+	@docker exec -i $(shell docker-compose ps -q php) app/vendor/bin/phpunit --colors=always --configuration app/
 	@make resetOwner
 
 resetOwner:

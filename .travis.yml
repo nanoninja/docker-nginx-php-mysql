@@ -1,4 +1,4 @@
-sudo: required
+#sudo: required
 
 env:
   DOCKER_COMPOSE_VERSION: 1.14.0
@@ -16,7 +16,7 @@ before_install:
 
 before_script:
   - make docker-start
-  - sleep 2m
+  - sleep 3m
   - docker inspect -f {{.Config.Volumes}} $(docker-compose ps -q php)
 
 script:
