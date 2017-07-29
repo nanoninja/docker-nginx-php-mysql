@@ -22,4 +22,4 @@ script:
   - make gen-certs
   - make apidoc
   - make test
-  - make mysql-dump
+  - sudo make mysql-dump
