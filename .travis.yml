@@ -13,6 +13,7 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
+  - sleep 3m
 
 before_script:
   - echo $(pwd)
@@ -20,6 +21,6 @@ before_script:
   - docker inspect -f {{.Config.Volumes}} $(docker-compose ps -q php)
 
 script:
-  - make composer-up
+  - ls $(pwd)/web/app/vendor
   - make apidoc
   - make test
