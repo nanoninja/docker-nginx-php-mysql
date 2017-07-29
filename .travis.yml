@@ -16,6 +16,7 @@ before_install:
   - docker-compose --version
 
 script:
+  - make composer-up
   - make docker-start
   - make apidoc
   - make test
