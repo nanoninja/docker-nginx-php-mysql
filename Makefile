@@ -28,7 +28,7 @@ init:
 	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
 
 apidoc:
-	@docker exec -i $(shell docker-compose ps -q php) php ./app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
+	@docker exec -i $(shell docker-compose ps -q php) app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
 	@make resetOwner
 
 clean:
@@ -68,7 +68,7 @@ mysql-restore:
 	@docker exec -i mysql mysql -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" < $(MYSQL_DUMPS_DIR)/db.sql
 
 test:
-	@docker exec -i $(shell docker-compose ps -q php) $(ROOT_PATH)/app/vendor/bin/phpunit --colors=always --configuration app/
+	@docker exec -i $(shell docker-compose ps -q php) php app/vendor/bin/phpunit --colors=always --configuration app/
 	@make resetOwner
 
 resetOwner:
