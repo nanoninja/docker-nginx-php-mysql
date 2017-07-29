@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 
 env:
-  DOCKER_COMPOSE_VERSION: 1.8.0
+  DOCKER_COMPOSE_VERSION: 1.14.0
 
 services:
   - docker
