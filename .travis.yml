@@ -20,5 +20,5 @@ before_script:
   - sleep 1m
 
 script:
-  - make travis
   - make apidoc
+  - make test
