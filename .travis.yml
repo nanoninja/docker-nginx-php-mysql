@@ -25,4 +25,5 @@ before_script:
 
 script:
   - make travis
+  - make composer-up
   - make apidoc
