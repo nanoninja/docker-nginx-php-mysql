@@ -27,9 +27,6 @@ help:
 init:
 	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
 
-travis:
-	@docker exec $(shell docker-compose ps -q php) php -r 'echo getcwd(); var_dump(file_exists("app/vendor/apigen/apigen/bin/apigen")); var_dump(file_exists("web/app/vendor/apigen/apigen/bin/apigen");'
-
 apidoc:
 	@docker exec $(shell docker-compose ps -q php) app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
 	@make resetOwner

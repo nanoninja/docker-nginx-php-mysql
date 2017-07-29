@@ -17,8 +17,7 @@ before_install:
 
 before_script:
   - make docker-start
-  - sleep 2m
-  - ls -lah web/app
+  - sleep 1m
 
 script:
   - make travis
