@@ -1,5 +1,4 @@
 sudo: required
-dist: trusty
 
 env:
   DOCKER_COMPOSE_VERSION: 1.14.0
@@ -15,8 +14,12 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
 
-script:
+before_script:
+  - echo $(pwd)
   - make docker-start
+  - docker inspect -f {{.Config.Volumes}} $(docker-compose ps -q php)
+
+script:
   - make composer-up
   - make apidoc
   - make test
