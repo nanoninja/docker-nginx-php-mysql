@@ -20,7 +20,7 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
     By this point we’ll have all the project pieces in place.
 
-4. [Use Makefile](#use-makefile) `Recommended`
+4. [Use Makefile](#use-makefile)
 
     When developing, you can use `Makefile` for doing recurrent operations.
 
@@ -233,7 +233,7 @@ sudo docker exec -i $(sudo docker-compose ps -q php) php ./app/vendor/apigen/api
 ### Testing PHP application with PHPUnit
 
 ```sh
-sudo docker exec -i $(sudo docker-compose ps -q php) app/vendor/bin/phpunit --colors=always --configuration app/
+sudo docker exec -i $(sudo docker-compose ps -q php) ./app/vendor/bin/phpunit --colors=always --configuration app/
 ```
 
 ### Handling database
