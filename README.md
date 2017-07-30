@@ -12,19 +12,23 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
     We’ll download the code from its repository on GitHub.
 
-5. [Configure Nginx With SSL Certificates](#configure-nginx-with-ssl-certificates)
+3. [Configure Nginx With SSL Certificates](#configure-nginx-with-ssl-certificates)
 
     We'll generate and configure SSL certificate for nginx before running server.
 
-3. [Run the application](#run-the-application)
+4. [Configure Xdebug](#configure-xdebug)
+
+    We'll configure Xdebug for IDE (PHPStorm or Netbeans).
+
+5. [Run the application](#run-the-application)
 
     By this point we’ll have all the project pieces in place.
 
-4. [Use Makefile](#use-makefile)
+6. [Use Makefile](#use-makefile)
 
     When developing, you can use `Makefile` for doing recurrent operations.
 
-5. [Use Docker Commands](#use-docker-commands)
+7. [Use Docker Commands](#use-docker-commands)
 
     When running, you can use docker commands for doing recurrent operations.
 
@@ -149,6 +153,24 @@ cd docker-nginx-php-mysql
 
 ---
 
+## Configure Xdebug
+
+If you use another IDE than PHPStorm or Netbeans, go to the [`remote debugging`](https://xdebug.org/docs/remote) section of Xdebug documentation.
+
+1. Get your own local IP address :
+
+    ```sh
+    sudo ifconfig
+    ```
+
+2. Edit php file `etc/php/php.ini` and comment or uncomment the configuration as needed.
+
+3. Set the `remote_host` parameter with your IP :
+
+    ```sh
+    xdebug.remote_host=192.168.0.1 # your IP
+    ```
+
 ## Run the application
 
 1. Copying the composer configuration file : 
@@ -235,6 +257,12 @@ sudo docker exec $(sudo docker-compose ps -q php) php ./app/vendor/apigen/apigen
 
 ```sh
 sudo docker exec $(sudo docker-compose ps -q php) ./app/vendor/bin/phpunit --colors=always --configuration app/
+```
+
+### Checking installed PHP extensions
+
+```sh
+sudo docker exec $(sudo docker-compose ps -q php) php -m
 ```
 
 ### Handling database
