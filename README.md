@@ -187,18 +187,19 @@ cd docker-nginx-php-mysql
 
 When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(software)) for doing the following operations :
 
-| Name          | Description                           |
-|---------------|---------------------------------------|
-| apidoc        | Generate documentation of API         |
-| clean         | Clean directories for reset           |
-| composer-up   | Update php composer                   |
-| docker-start  | Create and start containers           |
-| docker-stop   | Stop all services                     |
-| gen-certs     | Generate SSL certificates for `nginx` |
-| logs          | Follow log output                     |
-| mysql-dump    | Create backup of whole database       |
-| mysql-restore | Restore backup from whole database    |
-| test          | Test application with phpunit         |
+| Name          | Description                                |
+|---------------|--------------------------------------------|
+| apidoc        | Generate documentation of API              |
+| clean         | Clean directories for reset                |
+| code-sniff    | Check the API with PHP Code Sniffer (PSR2) |
+| composer-up   | Update php composer                        |
+| docker-start  | Create and start containers                |
+| docker-stop   | Stop all services                          |
+| gen-certs     | Generate SSL certificates for `nginx`      |
+| logs          | Follow log output                          |
+| mysql-dump    | Create backup of whole database            |
+| mysql-restore | Restore backup from whole database         |
+| test          | Test application with phpunit              |
 
 ### Examples
 
@@ -227,13 +228,13 @@ sudo docker run --rm -v $(pwd)/web/app:/app composer/composer update
 ### Generating PHP API documentation
 
 ```sh
-sudo docker exec -i $(sudo docker-compose ps -q php) php ./app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
+sudo docker exec $(sudo docker-compose ps -q php) php ./app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
 ```
 
 ### Testing PHP application with PHPUnit
 
 ```sh
-sudo docker exec -i $(sudo docker-compose ps -q php) ./app/vendor/bin/phpunit --colors=always --configuration app/
+sudo docker exec $(sudo docker-compose ps -q php) ./app/vendor/bin/phpunit --colors=always --configuration app/
 ```
 
 ### Handling database
@@ -257,13 +258,19 @@ mkdir -p data/db/dumps
 ```
 
 ```sh
-source .env && sudo docker exec -i mysql mysqldump --all-databases -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" > "data/db/dumps/db.sql"
+source .env && sudo docker exec mysql mysqldump --all-databases -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" > "data/db/dumps/db.sql"
 ```
 
 or
 
 ```sh
-source .env && sudo docker exec -i mysql mysqldump test -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" > "data/db/dumps/test.sql"
+source .env && sudo docker exec mysql mysqldump test -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" > "data/db/dumps/test.sql"
+```
+
+#### Restore Database
+
+```sh
+source .env && sudo docker exec -i $(sudo docker-compose ps -q mysqldb) mysql -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" < "data/db/dumps/db.sql"
 ```
 
 #### Connecting MySQL from [PDO](http://php.net/manual/en/book.pdo.php)
