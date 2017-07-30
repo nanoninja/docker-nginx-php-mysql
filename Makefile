@@ -11,6 +11,7 @@ help:
 	@echo ""
 	@echo "Commands:"
 	@echo "  apidoc              Generate documentation of API"
+	@echo "  code-sniff          Check the API with PHP Code Sniffer (PSR2)"
 	@echo "  clean               Clean directories for reset"
 	@echo "  composer-up         Update php composer"
 	@echo "  docker-start        Create and start containers"
@@ -36,6 +37,10 @@ clean:
 	@rm -Rf web/app/doc
 	@rm -Rf web/app/report
 	@rm -Rf etc/ssl/*
+
+code-sniff:
+	@echo "Checking the standard code..."
+	@docker exec $(shell docker-compose ps -q php) app/vendor/bin/phpcs --standard=PSR2 app/src
 
 composer-up:
 	@docker run --rm -v $(shell pwd)/web/app:/app composer/composer update
@@ -64,11 +69,11 @@ mysql-dump:
 mysql-restore:
 	@docker exec -i $(shell docker-compose ps -q mysqldb) mysql -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" < $(MYSQL_DUMPS_DIR)/db.sql
 
-test:
-	@docker exec -i $(shell docker-compose ps -q php) app/vendor/bin/phpunit --colors=always --configuration app/
+test: code-sniff
+	@docker exec $(shell docker-compose ps -q php) app/vendor/bin/phpunit --colors=always --configuration app/
 	@make resetOwner
 
 resetOwner:
 	@$(shell chown -Rf $(SUDO_USER):$(shell id -g -n $(SUDO_USER)) $(MYSQL_DUMPS_DIR) "$(shell pwd)/etc/ssl" "$(shell pwd)/web/app" 2> /dev/null)
 
-.PHONY: clean
+.PHONY: clean test code-sniff init
