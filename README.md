@@ -36,6 +36,8 @@ ___
 
 ## Install prerequisites
 
+For now, this project has been mainly created for Unix `(Linux/MacOS)`. Perhaps it could work on Windows. Make sure to make compatible the relative paths in the `docker-compose.yml` file configuration like `c:\foo\bar`.
+
 All requisites should be available for your distribution. The most important are :
 
 * [Git](https://git-scm.com/downloads)
@@ -140,7 +142,7 @@ cd docker-nginx-php-mysql
 
 2. Configure Nginx
 
-    Edit nginx file `etc/nginx/default.conf` and uncomment the server section :
+    Edit nginx file `etc/nginx/default.conf` and uncomment the SSL server section :
 
     ```sh
     # server {
@@ -155,7 +157,7 @@ cd docker-nginx-php-mysql
 
 ## Configure Xdebug
 
-If you use another IDE than PHPStorm or Netbeans, go to the [`remote debugging`](https://xdebug.org/docs/remote) section of Xdebug documentation.
+If you use another IDE than PHPStorm or Netbeans, go to the [remote debugging](https://xdebug.org/docs/remote) section of Xdebug documentation.
 
 1. Get your own local IP address :
 
@@ -170,6 +172,8 @@ If you use another IDE than PHPStorm or Netbeans, go to the [`remote debugging`]
     ```sh
     xdebug.remote_host=192.168.0.1 # your IP
     ```
+
+---
 
 ## Run the application
 
@@ -214,9 +218,9 @@ When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(soft
 | apidoc        | Generate documentation of API              |
 | clean         | Clean directories for reset                |
 | code-sniff    | Check the API with PHP Code Sniffer (PSR2) |
-| composer-up   | Update php composer                        |
+| composer-up   | Update PHP dependencies with composer      |
 | docker-start  | Create and start containers                |
-| docker-stop   | Stop all services                          |
+| docker-stop   | Stop and clear all services                |
 | gen-certs     | Generate SSL certificates for `nginx`      |
 | logs          | Follow log output                          |
 | mysql-dump    | Create backup of whole database            |
