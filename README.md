@@ -263,6 +263,12 @@ sudo docker exec $(sudo docker-compose ps -q php) php ./app/vendor/apigen/apigen
 sudo docker exec $(sudo docker-compose ps -q php) ./app/vendor/bin/phpunit --colors=always --configuration app/
 ```
 
+### Checking the standard code with [PSR2](http://www.php-fig.org/psr/psr-2/)
+
+```sh
+sudo docker exec $(sudo docker-compose ps -q php) ./app/vendor/bin/phpcs --standard=PSR2 app/src
+```
+
 ### Checking installed PHP extensions
 
 ```sh
