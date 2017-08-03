@@ -20,7 +20,7 @@ services:
             - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
             - "./web:/var/www/html"
     composer:
-        image: composer/composer
+        image: "composer"
         volumes:
             - "./web/app:/app"
         command: install

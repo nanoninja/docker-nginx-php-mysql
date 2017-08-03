@@ -26,7 +26,7 @@ init:
 	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
 
 apidoc:
-	@docker exec $(shell docker-compose ps -q php) app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
+	@docker exec $(shell docker-compose ps -q php) app/vendor/bin/apigen generate app/src --destination app/doc
 	@make resetOwner
 
 clean:
@@ -43,7 +43,7 @@ code-sniff:
 	@docker exec $(shell docker-compose ps -q php) app/vendor/bin/phpcs --standard=PSR2 app/src
 
 composer-up:
-	@docker run --rm -v $(shell pwd)/web/app:/app composer/composer update
+	@docker run --rm -v $(shell pwd)/web/app:/app composer update
 
 docker-start: init
 	@echo "Docker is running..."

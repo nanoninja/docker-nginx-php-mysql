@@ -249,13 +249,13 @@ make help
 ### Updating PHP dependencies with composer
 
 ```sh
-sudo docker run --rm -v $(pwd)/web/app:/app composer/composer update
+sudo docker run --rm -v $(pwd)/web/app:/app composer update
 ```
 
 ### Generating PHP API documentation
 
 ```sh
-sudo docker exec $(sudo docker-compose ps -q php) php ./app/vendor/apigen/apigen/bin/apigen generate -s app/src -d app/doc
+sudo docker exec $(sudo docker-compose ps -q php) ./app/vendor/bin/apigen generate app/src --destination app/doc
 ```
 
 ### Testing PHP application with PHPUnit
