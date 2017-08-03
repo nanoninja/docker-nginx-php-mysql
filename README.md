@@ -75,11 +75,12 @@ You should be careful when installing third party web servers such as MySQL or N
 
 This project use the following ports :
 
-| Server    | Port |
-|-----------|------|
-| MySQL     | 8989 |
-| Nginx     | 8000 |
-| Nginx SSL | 3000 |
+| Server     | Port |
+|------------|------|
+| MySQL      | 8989 |
+| PHPMyAdmin | 8080 |
+| Nginx      | 8000 |
+| Nginx SSL  | 3000 |
 
 ---
 
@@ -199,7 +200,7 @@ If you use another IDE than PHPStorm or Netbeans, go to the [remote debugging](h
 
     * [http://localhost:8000](http://localhost:8000/)
     * [https://localhost:3000](https://localhost:3000/) ([HTTPS](#configure-nginx-with-ssl-certificates) not configured by default)
-    * [phpMyAdmin](http://localhost:8080/) (username: dev, password: dev)
+    * [http://localhost:8080](http://localhost:8080/) (username: dev, password: dev)
 
 4. Stop and clear services
 
