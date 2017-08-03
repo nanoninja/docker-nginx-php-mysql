@@ -31,13 +31,13 @@ services:
             - "8080:80"
         environment:
             - PMA_ARBITRARY=1
-            - PMA_HOST=mysql
+            - PMA_HOST=${MYSQL_HOST}
         restart: always
         depends_on:
             - mysqldb
     mysqldb:
         image: mysql
-        container_name: mysql
+        container_name: ${MYSQL_HOST}
         restart: always
         env_file:
             - ".env"
