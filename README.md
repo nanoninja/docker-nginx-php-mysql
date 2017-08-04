@@ -104,9 +104,6 @@ cd docker-nginx-php-mysql
 .
 ├── Makefile
 ├── README.md
-├── bin
-│   └── linux
-│       └── clean.sh
 ├── data
 │   └── db
 │       ├── dumps
