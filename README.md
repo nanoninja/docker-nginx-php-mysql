@@ -202,7 +202,7 @@ If you use another IDE than PHPStorm or Netbeans, go to the [remote debugging](h
 4. Stop and clear services
 
     ```sh
-    sudo docker-compose stop && sudo docker-compose kill && sudo docker-compose rm -f
+    sudo docker-compose down -v
     ```
 
 ---
@@ -243,6 +243,12 @@ make help
 
 ## Use Docker commands
 
+### Installing package with composer
+
+```sh
+sudo docker run --rm -v $(pwd)/web/app:/app composer require symfony/yaml
+```
+
 ### Updating PHP dependencies with composer
 
 ```sh
@@ -252,25 +258,25 @@ sudo docker run --rm -v $(pwd)/web/app:/app composer update
 ### Generating PHP API documentation
 
 ```sh
-sudo docker exec $(sudo docker-compose ps -q php) ./app/vendor/bin/apigen generate app/src --destination app/doc
+sudo docker-compose exec php ./app/vendor/bin/apigen generate app/src --destination app/doc
 ```
 
 ### Testing PHP application with PHPUnit
 
 ```sh
-sudo docker exec $(sudo docker-compose ps -q php) ./app/vendor/bin/phpunit --colors=always --configuration app/
+sudo docker-compose exec php ./app/vendor/bin/phpunit --colors=always --configuration app/
 ```
 
 ### Checking the standard code with [PSR2](http://www.php-fig.org/psr/psr-2/)
 
 ```sh
-sudo docker exec $(sudo docker-compose ps -q php) ./app/vendor/bin/phpcs --standard=PSR2 app/src
+sudo docker-compose exec php ./app/vendor/bin/phpcs --standard=PSR2 app/src
 ```
 
 ### Checking installed PHP extensions
 
 ```sh
-sudo docker exec $(sudo docker-compose ps -q php) php -m
+sudo docker-compose exec php php -m
 ```
 
 ### Handling database
