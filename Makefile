@@ -53,7 +53,7 @@ docker-stop:
 	@make clean
 
 gen-certs:
-	@docker run --rm -v $(shell pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
+	@docker run --rm -v $(shell pwd)/etc/ssl:/certificates -e "SERVER=$(NGINX_HOST)" jacoelho/generate-certificate
 
 logs:
 	@docker-compose logs -f

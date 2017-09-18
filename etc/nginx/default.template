@@ -3,7 +3,7 @@
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    server_name localhost;
+    server_name ${NGINX_HOST};
 
     index index.php index.html;
     error_log  /var/log/nginx/error.log;
@@ -22,7 +22,7 @@ server {
 }
 
 server {
-    server_name localhost;
+    server_name ${NGINX_HOST};
 
     listen 443 ssl;
     fastcgi_param HTTPS on;
