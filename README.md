@@ -12,11 +12,11 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
     We’ll download the code from its repository on GitHub.
 
-3. [Configure Nginx With SSL Certificates](#configure-nginx-with-ssl-certificates)
+3. [Configure Nginx With SSL Certificates](#configure-nginx-with-ssl-certificates) [Optional]
 
     We'll generate and configure SSL certificate for nginx before running server.
 
-4. [Configure Xdebug](#configure-xdebug)
+4. [Configure Xdebug](#configure-xdebug) [Optional]
 
     We'll configure Xdebug for IDE (PHPStorm or Netbeans).
 
@@ -24,7 +24,7 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
     By this point we’ll have all the project pieces in place.
 
-6. [Use Makefile](#use-makefile)
+6. [Use Makefile](#use-makefile) [Optional]
 
     When developing, you can use `Makefile` for doing recurrent operations.
 
@@ -36,7 +36,7 @@ ___
 
 ## Install prerequisites
 
-For now, this project has been mainly created for Unix `(Linux/MacOS)`. Perhaps it could work on Windows. Make sure to make compatible the relative paths in the `docker-compose.yml` file configuration like `c:\foo\bar`.
+For now, this project has been mainly created for Unix `(Linux/MacOS)`. Perhaps it could work on Windows.
 
 All requisites should be available for your distribution. The most important are :
 
@@ -49,6 +49,10 @@ Check if `docker-compose` is already installed by entering the following command
 ```sh
 which docker-compose
 ```
+
+Check Docker Compose compatibility :
+
+ - [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
 
 The following is optional but makes life more enjoyable :
 
@@ -108,15 +112,18 @@ cd docker-nginx-php-mysql
 │   └── db
 │       ├── dumps
 │       └── mysql
+├── doc
 ├── docker-compose.yml
 ├── etc
 │   ├── nginx
-│   │   └── default.conf
+│   │   ├── default.conf
+│   │   └── default.template.conf
 │   ├── php
 │   │   └── php.ini
 │   └── ssl
 └── web
     ├── app
+    │   ├── composer.json
     │   ├── composer.json.dist
     │   ├── phpunit.xml.dist
     │   ├── src
@@ -132,21 +139,28 @@ cd docker-nginx-php-mysql
 
 ## Configure Nginx With SSL Certificates
 
+You can change the host name by editing the `.env` file.
+
+If you modify the host name, do not forget to add it to the `/etc/hosts` file.
+
 1. Generate SSL certificates
 
     ```sh
-    sudo docker run --rm -v $(pwd)/etc/ssl:/certificates -e "SERVER=localhost" jacoelho/generate-certificate
+    source .env && sudo docker run --rm -v $(pwd)/etc/ssl:/certificates -e "SERVER=$NGINX_HOST" jacoelho/generate-certificate
     ```
 
 2. Configure Nginx
 
-    Edit nginx file `etc/nginx/default.conf` and uncomment the SSL server section :
+    Do not modify the `etc/nginx/default.conf` file, it is overwritten by  `etc/nginx/default.template.conf`
+
+    Edit nginx file `etc/nginx/default.template.conf` and uncomment the SSL server section :
 
     ```sh
     # server {
-    #     server_name localhost;
+    #     server_name ${NGINX_HOST};
     #
     #     listen 443 ssl;
+    #     fastcgi_param HTTPS on;
     #     ...
     # }
     ```
@@ -155,7 +169,9 @@ cd docker-nginx-php-mysql
 
 ## Configure Xdebug
 
-If you use another IDE than PHPStorm or Netbeans, go to the [remote debugging](https://xdebug.org/docs/remote) section of Xdebug documentation.
+If you use another IDE than [PHPStorm](https://www.jetbrains.com/phpstorm/) or [Netbeans](https://netbeans.org/), go to the [remote debugging](https://xdebug.org/docs/remote) section of Xdebug documentation.
+
+For a better integration of Docker to PHPStorm, use the [documentation](https://github.com/nanoninja/docker-nginx-php-mysql/blob/master/doc/phpstorm-macosx.md).
 
 1. Get your own local IP address :
 
@@ -170,7 +186,6 @@ If you use another IDE than PHPStorm or Netbeans, go to the [remote debugging](h
     ```sh
     xdebug.remote_host=192.168.0.1 # your IP
     ```
-
 ---
 
 ## Run the application
