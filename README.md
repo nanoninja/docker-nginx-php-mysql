@@ -285,7 +285,7 @@ sudo docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --confi
 ### Checking the standard code with [PSR2](http://www.php-fig.org/psr/psr-2/)
 
 ```sh
-sudo docker-compose exec -T php ./app/vendor/bin/phpcs --standard=PSR2 ./app/src
+sudo docker-compose exec -T php ./app/vendor/bin/phpcs -v --standard=PSR2 ./app/src
 ```
 
 ### Checking installed PHP extensions
