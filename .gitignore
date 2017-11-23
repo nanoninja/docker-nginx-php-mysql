@@ -1,17 +1,14 @@
 # Global
 .*.swp
 .DS_Store
-
-# Application
-web/app/composer.json
+phinx.yml
 
 # PHPStorm
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/dictionaries
+.idea/
 
 # Netbeans
 nbproject/
-/nbproject/
-/nbproject/private/
-/nbproject/private/private.properties
+
+./etc/nginx/default.conf
+
+data/

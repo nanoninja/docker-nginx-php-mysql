@@ -1,0 +1,12 @@
+.DS_Store
+composer.lock
+cache/
+vendor/
+.vagrant/
+.env
+phinx.yml
+Vagrantfile
+.idea/
+coverage/
+src/Tests/acme_db.xml
+src/acme_test.sql
