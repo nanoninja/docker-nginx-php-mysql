@@ -2,15 +2,15 @@
 <phpunit colors="true">
     <testsuites>
         <testsuite name="Application Test Suite">
-            <directory>./src/Tests/</directory>
+            <directory>./app/Tests/</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist processUncoveredFilesFromWhiteList="true">
-            <directory suffix=".php">./src</directory>
+            <directory suffix=".php">./app</directory>
             <exclude>
-                <directory>./src/Tests</directory>
+                <directory>./app/Tests</directory>
             </exclude>
         </whitelist>
     </filter>
