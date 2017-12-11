@@ -24,6 +24,7 @@ services:
         volumes:
             - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
             - "./web:/var/www/html"
+            - ".env:/var/www/html/.env"
     composer:
         image: "composer"
         volumes:
