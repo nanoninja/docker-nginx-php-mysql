@@ -1,0 +1,47 @@
+.empty-well {
+    background: transparent;
+}
+.bigger-icon {
+    font-size: 48px;
+}
+.footer-background {
+    background-color: black;
+    color: white;
+}
+.padding-left-8px {
+    padding-left: 8px;
+}
+.error {
+    color: #FF0000;
+}
+
+.push-down {
+    margin-top: 60px;
+}
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 136px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 136px;
+  background-color: #f5f5f5;
+}
+
+/* admin classes */
+.admin-hidden {
+    display: none;
+}
+.admin-display {
+    display:inline-block;
+}
+.outlined {
+    border: 1px solid red;
+}

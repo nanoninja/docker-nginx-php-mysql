@@ -1,0 +1,27 @@
+{
+    "require": {
+        "filp/whoops": "2.0.*",
+        "vlucas/phpdotenv": "~1.1",
+        "illuminate/database": "5.1.*",
+        "altorouter/altorouter": "1.1.0",
+        "respect/validation": "~1.0",
+        "duncan3dc/blade": "2.2.*",
+        "robmorgan/phinx": "^0.4.5",
+        "symfony/var-dumper": "^2.7",
+        "cocur/slugify": "^1.2",
+        "swiftmailer/swiftmailer": "^5.4",
+        "kunststube/csrfp": "^0.1.0",
+        "sunra/php-simple-html-dom-parser": "v1.5.0",
+        "rdlowrey/auryn": "1.1.*",
+        "fabpot/goutte": "^3.1"
+    },
+    "autoload": {
+      "psr-4": { "Acme\\": "app/" }
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*",
+        "phpunit/phpunit": "^5.1",
+        "phpunit/php-invoker": "^1.1",
+        "phpunit/dbunit": "^2.0"
+    }
+}
