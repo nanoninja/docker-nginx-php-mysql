@@ -9,12 +9,17 @@ use Acme\Validation\Validator;
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Response
+     * @var Request|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $request;
+
+    /**
+     * @var Response|\PHPUnit_Framework_MockObject_MockObject
      */
     private $response;
 
     /**
-     * @var Session
+     * @var Session|\PHPUnit_Framework_MockObject_MockObject
      */
     private $session;
 
@@ -24,12 +29,13 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->response = $this->createMock(Response::class);
         $this->session  = $this->createMock(Session::class);
+        $this->request  = $this->createMock(Request::class);
     }
 
     public function testGetIsValidReturnsTrue()
     {
-        $request = new Request();
-        $validator = new Validator($request, $this->response, $this->session);
+        $validator = new Validator($this->request, $this->response, $this->session);
+
         $validator->setIsValid(true);
 
         $this->assertTrue($validator->getIsValid());
@@ -37,8 +43,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetIsValidReturnsFalse()
     {
-        $request = new Request();
-        $validator = new Validator($request, $this->response, $this->session);
+        $validator = new Validator($this->request, $this->response, $this->session);
         $validator->setIsValid(false);
 
         $this->assertFalse($validator->getIsValid());
@@ -46,12 +51,53 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckForMinStringLengthWithValidData()
     {
-        $_REQUEST['mintype'] = 'some_value';
-        $request = new Request();
-        $validator = new Validator($request, $this->response, $this->session);
+        $this->request->expects(static::once())
+            ->method('input')
+            ->with('mintype')
+            ->willReturn('some_value');
 
-        $errors = $validator->check(['mintype' => 'min:3']);
+        $validator = new Validator($this->request, $this->response, $this->session);
+        $errors    = $validator->check(['mintype' => 'min:3']);
 
         $this->assertCount(0, $errors);
+    }
+
+    public function testCheckForMinStringLengthWithInValidData()
+    {
+        $this->request->expects(static::once())
+            ->method('input')
+            ->with('mintype')
+            ->willReturn('s');
+
+        $validator = new Validator($this->request, $this->response, $this->session);
+        $errors    = $validator->check(['mintype' => 'min:3']);
+
+        $this->assertCount(1, $errors);
+    }
+
+    public function testCheckForEmailWithValidData()
+    {
+        $this->request->expects(static::once())
+            ->method('input')
+            ->with('email')
+            ->willReturn('test@test.com');
+
+        $validator = new Validator($this->request, $this->response, $this->session);
+        $errors    = $validator->check(['email' => 'email']);
+
+        $this->assertCount(0, $errors);
+    }
+
+    public function testCheckForEmailWithInValidData()
+    {
+        $this->request->expects(static::once())
+            ->method('input')
+            ->with('email')
+            ->willReturn('test@test');
+
+        $validator = new Validator($this->request, $this->response, $this->session);
+        $errors    = $validator->check(['email' => 'email']);
+
+        $this->assertCount(1, $errors);
     }
 }
