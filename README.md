@@ -123,7 +123,6 @@ cd docker-nginx-php-mysql
 │   └── ssl
 └── web
     ├── app
-    │   ├── composer.json
     │   ├── composer.json.dist
     │   ├── phpunit.xml.dist
     │   ├── src
