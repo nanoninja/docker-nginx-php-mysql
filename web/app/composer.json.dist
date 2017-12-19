@@ -6,7 +6,7 @@
         "squizlabs/php_codesniffer": "3.*",
         "phpunit/phpunit": "^6.0",
         "apigen/apigen": "dev-master",
-        "roave/better-reflection": "dev-master#a402048"
+        "roave/better-reflection": "dev-master#c87d856"
     },
     "autoload": {
         "psr-4": {
