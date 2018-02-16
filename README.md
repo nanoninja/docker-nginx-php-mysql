@@ -52,7 +52,7 @@ which docker-compose
 
 Check Docker Compose compatibility :
 
- - [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
+* [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
 
 The following is optional but makes life more enjoyable :
 
@@ -86,17 +86,17 @@ This project use the following ports :
 | Nginx      | 8000 |
 | Nginx SSL  | 3000 |
 
----
+___
 
 ## Clone the project
 
-To install [Git](http://git-scm.com/book/en/v2/Getting-Started-Installing-Git), download it and install following the instructions : 
+To install [Git](http://git-scm.com/book/en/v2/Getting-Started-Installing-Git), download it and install following the instructions :
 
 ```sh
 git clone https://github.com/nanoninja/docker-nginx-php-mysql.git
 ```
 
-Go to the project directory : 
+Go to the project directory :
 
 ```sh
 cd docker-nginx-php-mysql
@@ -134,7 +134,7 @@ cd docker-nginx-php-mysql
         └── index.php
 ```
 
----
+___
 
 ## Configure Nginx With SSL Certificates
 
@@ -164,7 +164,7 @@ If you modify the host name, do not forget to add it to the `/etc/hosts` file.
     # }
     ```
 
----
+___
 
 ## Configure Xdebug
 
@@ -185,7 +185,7 @@ For a better integration of Docker to PHPStorm, use the [documentation](https://
     ```sh
     xdebug.remote_host=192.168.0.1 # your IP
     ```
----
+___
 
 ## Run the application
 
@@ -219,7 +219,7 @@ For a better integration of Docker to PHPStorm, use the [documentation](https://
     sudo docker-compose down -v
     ```
 
----
+___
 
 ## Use Makefile
 
@@ -241,7 +241,7 @@ When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(soft
 
 ### Examples
 
-Start the application : 
+Start the application :
 
 ```sh
 sudo make docker-start
@@ -253,7 +253,7 @@ Show help :
 make help
 ```
 
----
+___
 
 ## Use Docker commands
 
@@ -342,10 +342,8 @@ source .env && sudo docker exec -i $(sudo docker-compose ps -q mysqldb) mysql -u
 ?>
 ```
 
----
+___
 
-## Help us !
+## Help us
 
 Any thought, feedback or (hopefully not!)
-
-Developed by [@letvinz](https://twitter.com/letvinz)
