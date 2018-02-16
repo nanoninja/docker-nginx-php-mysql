@@ -4,6 +4,11 @@
 
 # Application
 web/app/composer.json
+web/app/composer.lock
+web/app/vendor/
+web/app/doc/
+web/app/report/
+data/
 
 # PHPStorm
 .idea/**/workspace.xml
