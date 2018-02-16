@@ -4,7 +4,7 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "3.*",
-        "phpunit/phpunit": "^6.0",
+        "phpunit/phpunit": "^7.0",
         "apigen/apigen": "dev-master",
         "roave/better-reflection": "dev-master#c87d856"
     },
@@ -18,6 +18,6 @@
             "AppTest\\Acme\\": "test/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
