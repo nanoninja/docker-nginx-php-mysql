@@ -12,11 +12,11 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
     We’ll download the code from its repository on GitHub.
 
-3. [Configure Nginx With SSL Certificates](#configure-nginx-with-ssl-certificates) [Optional]
+3. [Configure Nginx With SSL Certificates](#configure-nginx-with-ssl-certificates) [`Optional`]
 
     We'll generate and configure SSL certificate for nginx before running server.
 
-4. [Configure Xdebug](#configure-xdebug) [Optional]
+4. [Configure Xdebug](#configure-xdebug) [`Optional`]
 
     We'll configure Xdebug for IDE (PHPStorm or Netbeans).
 
@@ -24,7 +24,7 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
     By this point we’ll have all the project pieces in place.
 
-6. [Use Makefile](#use-makefile) [Optional]
+6. [Use Makefile](#use-makefile) [`Optional`]
 
     When developing, you can use `Makefile` for doing recurrent operations.
 
@@ -225,20 +225,20 @@ ___
 
 When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(software)) for doing the following operations :
 
-| Name          | Description                                |
-|---------------|--------------------------------------------|
-| apidoc        | Generate documentation of API              |
-| clean         | Clean directories for reset                |
-| code-sniff    | Check the API with PHP Code Sniffer (PSR2) |
-| composer-up   | Update PHP dependencies with composer      |
-| docker-start  | Create and start containers                |
-| docker-stop   | Stop and clear all services                |
-| gen-certs     | Generate SSL certificates for `nginx`      |
-| logs          | Follow log output                          |
-| mysql-dump    | Create backup of whole database            |
-| mysql-restore | Restore backup from whole database         |
-| phpmd         | Analyse the API with PHP Mess Detector     |
-| test          | Test application with phpunit              |
+| Name          | Description                                  |
+|---------------|----------------------------------------------|
+| apidoc        | Generate documentation of API                |
+| clean         | Clean directories for reset                  |
+| code-sniff    | Check the API with PHP Code Sniffer (`PSR2`) |
+| composer-up   | Update PHP dependencies with composer        |
+| docker-start  | Create and start containers                  |
+| docker-stop   | Stop and clear all services                  |
+| gen-certs     | Generate SSL certificates for `nginx`        |
+| logs          | Follow log output                            |
+| mysql-dump    | Create backup of all databases               |
+| mysql-restore | Restore backup of all databases              |
+| phpmd         | Analyse the API with PHP Mess Detector       |
+| test          | Test application with phpunit                |
 
 ### Examples
 
@@ -273,13 +273,19 @@ sudo docker run --rm -v $(pwd)/web/app:/app composer update
 ### Generating PHP API documentation
 
 ```sh
-sudo docker-compose exec -T php ./app/vendor/bin/apigen generate app/src --destination ./app/doc
+sudo docker-compose exec -T php php -d memory_limit=256M -d xdebug.profiler_enable=0 ./app/vendor/bin/apigen generate app/src --destination ./app/doc
 ```
 
 ### Testing PHP application with PHPUnit
 
 ```sh
 sudo docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app/
+```
+
+### Fixing standard code with [PSR2](http://www.php-fig.org/psr/psr-2/)
+
+```sh
+sudo docker-compose exec -T php ./app/vendor/bin/phpcs -v --standard=PSR2 ./app/src/
 ```
 
 ### Checking the standard code with [PSR2](http://www.php-fig.org/psr/psr-2/)
@@ -314,7 +320,7 @@ and
 mysql -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD"
 ```
 
-#### Backup of database
+#### Creating a backup of all databases
 
 ```sh
 mkdir -p data/db/dumps
@@ -324,13 +330,7 @@ mkdir -p data/db/dumps
 source .env && sudo docker exec $(sudo docker-compose ps -q mysqldb) mysqldump --all-databases -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" > "data/db/dumps/db.sql"
 ```
 
-or
-
-```sh
-source .env && sudo docker exec $(sudo docker-compose ps -q mysqldb) mysqldump test -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" > "data/db/dumps/test.sql"
-```
-
-#### Restore Database
+#### Restoring a backup of all databases
 
 ```sh
 source .env && sudo docker exec -i $(sudo docker-compose ps -q mysqldb) mysql -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" < "data/db/dumps/db.sql"
