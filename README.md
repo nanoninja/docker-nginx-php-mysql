@@ -338,10 +338,10 @@ source .env && sudo docker exec -i $(sudo docker-compose ps -q mysqldb) mysql -u
 
 #### Creating a backup of single database
 
-**`Notice:`** Replace "YOUR_DB_NAME_HERE" by your custom name.
+**`Notice:`** Replace "YOUR_DB_NAME" by your custom name.
 
 ```sh
-source .env && sudo docker exec $(sudo docker-compose ps -q mysqldb) mysqldump -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" --databases YOUR_DB_NAME_HERE > "data/db/dumps/YOUR_DB_NAME_HERE_dump.sql"
+source .env && sudo docker exec $(sudo docker-compose ps -q mysqldb) mysqldump -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" --databases YOUR_DB_NAME > "data/db/dumps/YOUR_DB_NAME_dump.sql"
 ```
 
 #### Restoring a backup of single database
