@@ -336,6 +336,21 @@ source .env && sudo docker exec $(sudo docker-compose ps -q mysqldb) mysqldump -
 source .env && sudo docker exec -i $(sudo docker-compose ps -q mysqldb) mysql -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" < "data/db/dumps/db.sql"
 ```
 
+#### Creating a backup of single database
+
+**`Notice:`** Replace "YOUR_DB_NAME_HERE" by your custom name.
+
+```sh
+source .env && sudo docker exec $(sudo docker-compose ps -q mysqldb) mysqldump -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" --databases YOUR_DB_NAME_HERE > "data/db/dumps/YOUR_DB_NAME_HERE_dump.sql"
+```
+
+#### Restoring a backup of single database
+
+```sh
+source .env && sudo docker exec -i $(sudo docker-compose ps -q mysqldb) mysql -u"$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" < "data/db/dumps/YOUR_DB_NAME_dump.sql"
+```
+
+
 #### Connecting MySQL from [PDO](http://php.net/manual/en/book.pdo.php)
 
 ```php
