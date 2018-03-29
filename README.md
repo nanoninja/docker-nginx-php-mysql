@@ -279,13 +279,13 @@ sudo docker-compose exec -T php php -d memory_limit=256M -d xdebug.profiler_enab
 ### Testing PHP application with PHPUnit
 
 ```sh
-sudo docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app/
+sudo docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app
 ```
 
 ### Fixing standard code with [PSR2](http://www.php-fig.org/psr/psr-2/)
 
 ```sh
-sudo docker-compose exec -T php ./app/vendor/bin/phpcs -v --standard=PSR2 ./app/src/
+sudo docker-compose exec -T php ./app/vendor/bin/phpcbf -v --standard=PSR2 ./app/src
 ```
 
 ### Checking the standard code with [PSR2](http://www.php-fig.org/psr/psr-2/)
