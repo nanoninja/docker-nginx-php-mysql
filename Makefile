@@ -18,8 +18,8 @@ help:
 	@echo "  docker-stop         Stop and clear all services"
 	@echo "  gen-certs           Generate SSL certificates"
 	@echo "  logs                Follow log output"
-	@echo "  mysql-dump          Create backup of whole database"
-	@echo "  mysql-restore       Restore backup from whole database"
+	@echo "  mysql-dump          Create backup of all databases"
+	@echo "  mysql-restore       Restore backup of all databases"
 	@echo "  phpmd               Analyse the API with PHP Mess Detector"
 	@echo "  test                Test application"
 
@@ -27,7 +27,7 @@ init:
 	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
 
 apidoc:
-	@docker-compose exec -T php ./app/vendor/bin/apigen generate app/src --destination app/doc
+	@docker-compose exec -T php php -d memory_limit=256M -d xdebug.profiler_enable=0 ./app/vendor/bin/apigen generate app/src --destination app/doc
 	@make resetOwner
 
 clean:
