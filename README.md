@@ -237,6 +237,7 @@ When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(soft
 | logs          | Follow log output                          |
 | mysql-dump    | Create backup of whole database            |
 | mysql-restore | Restore backup from whole database         |
+| phpmd         | Analyse the API with PHP Mess Detector     |
 | test          | Test application with phpunit              |
 
 ### Examples
@@ -285,6 +286,12 @@ sudo docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --confi
 
 ```sh
 sudo docker-compose exec -T php ./app/vendor/bin/phpcs -v --standard=PSR2 ./app/src
+```
+
+### Analyzing source code with [PHP Mess Detector](https://phpmd.org/)
+
+```sh
+sudo docker-compose exec -T php ./app/vendor/bin/phpmd ./app/src text cleancode,codesize,controversial,design,naming,unusedcode
 ```
 
 ### Checking installed PHP extensions

@@ -20,6 +20,7 @@ help:
 	@echo "  logs                Follow log output"
 	@echo "  mysql-dump          Create backup of whole database"
 	@echo "  mysql-restore       Restore backup from whole database"
+	@echo "  phpmd               Analyse the API with PHP Mess Detector"
 	@echo "  test                Test application"
 
 init:
@@ -65,6 +66,12 @@ mysql-dump:
 
 mysql-restore:
 	@docker exec -i $(shell docker-compose ps -q mysqldb) mysql -u"$(MYSQL_ROOT_USER)" -p"$(MYSQL_ROOT_PASSWORD)" < $(MYSQL_DUMPS_DIR)/db.sql 2>/dev/null
+
+phpmd:
+	@docker-compose exec -T php \
+	./app/vendor/bin/phpmd \
+	./app/src \
+	text cleancode,codesize,controversial,design,naming,unusedcode
 
 test: code-sniff
 	@docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app/

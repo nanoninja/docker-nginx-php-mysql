@@ -19,11 +19,12 @@ before_script:
   - sleep 2m
 
 script:
-  - sudo make gen-certs
   - sudo make apidoc
-  - sudo make test
+  - sudo make gen-certs
   - sudo make mysql-dump
   - sudo make mysql-restore
+  - sudo make phpmd
+  - sudo make test
 
 after_script:
   - sudo make docker-stop
