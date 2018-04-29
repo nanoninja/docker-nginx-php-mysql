@@ -40,7 +40,7 @@ services:
         depends_on:
             - mysqldb
     mysqldb:
-        image: mysql
+        image: mysql:${MYSQL_VERSION}
         container_name: ${MYSQL_HOST}
         restart: always
         env_file:
