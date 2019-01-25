@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
-    bootstrap="test/bootstrap.php"
-    colors="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd" bootstrap="test/bootstrap.php" colors="true">
 
     <testsuites>
         <testsuite name="PHP Test suite">
@@ -25,7 +21,7 @@
     </php>
 
     <logging>
-        <log type="coverage-html" target="./report/phpunit" charset="UTF-8" yui="true" highlight="true"/>
+        <log type="coverage-html" target="./report/phpunit"/>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
     </logging>
 </phpunit>
