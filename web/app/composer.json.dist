@@ -6,7 +6,7 @@
         "apigen/apigen": "dev-master",
         "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "^7.0",
-        "roave/better-reflection": "dev-master#c87d856",
+        "roave/better-reflection": "dev-master",
         "squizlabs/php_codesniffer": "3.*"
     },
     "autoload": {
