@@ -27,24 +27,28 @@ init:
 	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
 
 apidoc:
-	@docker-compose exec -T php php -d memory_limit=256M -d xdebug.profiler_enable=0 ./app/vendor/bin/apigen generate app/src --destination app/doc
+	@docker-compose exec -T php php -d memory_limit=256M -d xdebug.profiler_enable=0 .${COMPOSER_DIR}/vendor/bin/apigen generate /var/www/html${COMPOSER_DIR}/src --destination /var/www/html${COMPOSER_DIR}/doc
 	@make resetOwner
+
+laravel-create:
+	@rm -Rf ${NGINX_ROOT_VOL}/*
+	@docker run --rm -v $(shell pwd)/${NGINX_ROOT_VOL}:/app composer create-project --prefer-dist laravel/laravel ./
 
 clean:
 	@rm -Rf data/db/mysql/*
 	@rm -Rf $(MYSQL_DUMPS_DIR)/*
-	@rm -Rf web/app/vendor
-	@rm -Rf web/app/composer.lock
-	@rm -Rf web/app/doc
-	@rm -Rf web/app/report
+	@rm -Rf ${NGINX_ROOT_VOL}${COMPOSER_DIR}/vendor
+	@rm -Rf ${NGINX_ROOT_VOL}${COMPOSER_DIR}/composer.lock
+	@rm -Rf ${NGINX_ROOT_VOL}${COMPOSER_DIR}/doc
+	@rm -Rf ${NGINX_ROOT_VOL}${COMPOSER_DIR}/report
 	@rm -Rf etc/ssl/*
 
 code-sniff:
 	@echo "Checking the standard code..."
-	@docker-compose exec -T php ./app/vendor/bin/phpcs -v --standard=PSR2 app/src
+	@docker-compose exec -T php .${COMPOSER_DIR}/vendor/bin/phpcs -v --standard=PSR2 .${COMPOSER_DIR}/src
 
 composer-up:
-	@docker run --rm -v $(shell pwd)/web/app:/app composer update
+	@docker run --rm -v $(shell pwd)/${NGINX_ROOT_VOL}${COMPOSER_DIR}:/app composer update
 
 docker-start: init
 	docker-compose up -d
@@ -78,6 +82,6 @@ test: code-sniff
 	@make resetOwner
 
 resetOwner:
-	@$(shell chown -Rf $(SUDO_USER):$(shell id -g -n $(SUDO_USER)) $(MYSQL_DUMPS_DIR) "$(shell pwd)/etc/ssl" "$(shell pwd)/web/app" 2> /dev/null)
+	@$(shell chown -Rf $(SUDO_USER):$(shell id -g -n $(SUDO_USER)) $(MYSQL_DUMPS_DIR) "$(shell pwd)/etc/ssl" "$(shell pwd)/${NGINX_ROOT_VOL}${COMPOSER_DIR}" 2> /dev/null)
 
 .PHONY: clean test code-sniff init
