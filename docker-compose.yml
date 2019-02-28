@@ -27,7 +27,7 @@ services:
         image: "composer"
         volumes:
             - "./web/app:/app"
-        command: install
+        command: composer install
     myadmin:
         image: phpmyadmin/phpmyadmin
         container_name: phpmyadmin
