@@ -32,6 +32,10 @@ Docker running Nginx, PHP-FPM, Composer, MySQL and PHPMyAdmin.
 
     When running, you can use docker commands for doing recurrent operations.
 
+8. [Windows](#windows)
+
+    Add some adjustments to make this setup work on Windows.
+
 ___
 
 ## Install prerequisites
@@ -363,6 +367,25 @@ source .env && sudo docker exec -i $(sudo docker-compose ps -q mysqldb) mysql -u
     }
 ?>
 ```
+
+___
+
+## Windows
+
+On Windows you might run into the following error at your mysql container:
+```bash
+  InnoDB: Operating system error number 22 in a file operation
+```
+A config file with the bugfix will be created and mounted into the mysql container:
+```bash
+  mkdir data
+  mkdir data/conf
+  printf "[mysqld]\ninnodb_use_native_aio=0" > data/conf/local.cnf
+  chmod 0444 data/conf/local.cnf
+  printf '%12s- "./data/conf:/etc/mysql/conf.d"' >> docker-compose.yml
+```
+
+If your still in need Docker Toolbox with VitualBox, don't forget to establish port forwarding as described [here](https://www.jhipster.tech/tips/020_tip_using_docker_containers_as_localhost_on_mac_and_windows.html)
 
 ___
 
