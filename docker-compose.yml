@@ -5,7 +5,7 @@ services:
         volumes:
             - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
             - "./etc/ssl:/etc/ssl"
-            - "./web:/var/www/html"
+            - "./web:/var/www"
             - "./etc/nginx/default.template.conf:/etc/nginx/conf.d/default.template"
         ports:
             - "8000:80"
@@ -22,7 +22,7 @@ services:
         restart: always
         volumes:
             - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
-            - "./web:/var/www/html"
+            - "./web:/var/www"
     composer:
         image: "composer"
         volumes:

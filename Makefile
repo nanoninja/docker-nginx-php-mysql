@@ -83,4 +83,7 @@ resetOwner:
 .PHONY: clean test code-sniff init
 
 init-laravel:
-	./laravel.sh
+	DB_HOST=$(MYSQL_HOST) DB_PASSWORD=$(MYSQL_ROOT_PASSWORD) ./laravel.sh $(LARAVEL_VERSION)
+
+migrate-laravel:
+	@docker-compose exec php art migrate
