@@ -18,7 +18,7 @@ services:
             - php
             - mysqldb
     php:
-        image: nanoninja/php-fpm:${PHP_VERSION}
+        image: cyberduck/php-fpm-laravel:${PHP_VERSION}
         restart: always
         volumes:
             - "./etc/php/php.ini:/usr/local/etc/php/conf.d/php.ini"
@@ -51,6 +51,6 @@ services:
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         ports:
-            - "8989:3306"
+            - "3306:3306"
         volumes:
             - "./data/db/mysql:/var/lib/mysql"

@@ -44,7 +44,7 @@ code-sniff:
 	@docker-compose exec -T php ./app/vendor/bin/phpcs -v --standard=PSR2 app/src
 
 composer-up:
-	@docker run --rm -v $(shell pwd)/web/app:/app composer update
+	@docker run --rm -v $(shell pwd)/web:/app composer update
 
 docker-start: init
 	docker-compose up -d
@@ -81,3 +81,6 @@ resetOwner:
 	@$(shell chown -Rf $(SUDO_USER):$(shell id -g -n $(SUDO_USER)) $(MYSQL_DUMPS_DIR) "$(shell pwd)/etc/ssl" "$(shell pwd)/web/app" 2> /dev/null)
 
 .PHONY: clean test code-sniff init
+
+init-laravel:
+	./laravel.sh
