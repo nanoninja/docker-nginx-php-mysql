@@ -1,0 +1,95 @@
+version: "3.8"
+services:
+    web:
+        image: nginx:alpine
+        volumes:
+            - ssl:/etc/ssl
+            - web:/var/www/html
+        ports:
+            - "8000:80"
+            - "3000:443"
+        configs:
+            - nginx_default:/etc/nginx/conf.d/default.conf
+            - nginx_default_template:/etc/nginx/conf.d/default.template
+        secrets:
+            - nginx_host
+        environment:
+            - NGINX_HOST= /run/secrets/nginx_host
+        command: /bin/sh -c "envsubst '$$NGINX_HOST' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+        restart: always
+        depends_on:
+            - php
+            - mysqldb
+    php:
+        image: nanoninja/php-fpm:7.4
+        restart: always
+        volumes:
+            - web:/var/www/html"
+        configs:
+            - php_ini:/usr/local/etc/php/conf.d/php.ini
+    # composer:
+    #     image: "composer"
+    #     volumes:
+    #         - "./web/app:/app"
+    #     command: install
+    myadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        ports:
+            - "8080:80"
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=mysql
+        restart: always
+        depends_on:
+            - mysqldb
+    mysqldb:
+        image: mysql:8
+        container_name: mysql
+        restart: always
+        secrets:
+            - mysql_database
+            - mysql_password
+            - mysql_root_password
+            - mysql_user
+        environment:
+            - MYSQL_DATABASE= /run/secrets/mysql_database
+            - MYSQL_ROOT_PASSWORD= /run/secrets/mysql_root_password
+            - MYSQL_USER= /run/secrets/mysql_user
+            - MYSQL_PASSWORD= /run/secrets/mysql_password
+        ports:
+            - "8989:3306"
+        volumes:
+            - mysql-data:/var/lib/mysql"
+
+volumes:
+    ssl: external:false
+    web: external:false
+    mysql-data: external:false
+
+configs:
+    nginx_default:
+        #file: ./etc/nginx/default.conf
+        external: true
+    nginx_default_template:
+        #file: ./etc/nginx/default.template.conf
+        external: true
+    php_ini:
+        #file: ./etc/php/php.ini
+        external: true
+secrets:
+    nginx_host:
+        #file: ./etc/nginx/secrets/nginx_host.txt
+        external: true
+    mysql_database:
+        #file: ./etc/mysql/secrets/mysql_database.txt
+        external: true
+    mysql_password:
+        #file: ./etc/mysql/secrets/mysql_password.txt
+        external: true
+    mysql_root_password:
+        #file: ./etc/mysql/secrets/mysql_root_password.txt
+        external: true
+    mysql_user:
+        #file: ./etc/mysql/secrets/mysql_user.txt
+        external: true
