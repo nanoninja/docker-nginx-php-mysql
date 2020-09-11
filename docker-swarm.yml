@@ -21,7 +21,7 @@ services:
             - php
             - mysqldb
     php:
-        image: nanoninja/php-fpm:7.4
+        image: nanoninja/php-fpm:7.4.4
         restart: always
         volumes:
             - web:/var/www/html"
