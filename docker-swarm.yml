@@ -9,8 +9,10 @@ services:
             - "8000:80"
             - "3000:443"
         configs:
-            - nginx_default
-            - nginx_default_template
+            - source: nginx_default
+              target: /etc/nginx/conf.d/default.conf
+            - source: nginx_default_template
+              target: /etc/nginx/conf.d/default.template
         secrets:
             - nginx_host
         environment:
@@ -26,7 +28,8 @@ services:
         volumes:
             - web:/var/www/html"
         configs:
-            - php_ini
+            - source: php_ini
+              target: /usr/local/etc/php/conf.d/php.ini
     # composer:
     #     image: "composer"
     #     volumes:
