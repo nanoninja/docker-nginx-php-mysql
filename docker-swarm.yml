@@ -26,7 +26,7 @@ services:
         volumes:
             - web:/var/www/html"
         configs:
-            - php_ini:/usr/local/etc/php/conf.d/php.ini
+            - php_ini
     # composer:
     #     image: "composer"
     #     volumes:
@@ -63,9 +63,9 @@ services:
             - mysql-data:/var/lib/mysql"
 
 volumes:
-    ssl: external:false
-    web: external:false
-    mysql-data: external:false
+    ssl:
+    web:
+    mysql-data:
 
 configs:
     nginx_default:
