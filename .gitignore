@@ -9,6 +9,7 @@ web/app/vendor/
 web/app/doc/
 web/app/report/
 data/
+web/vendor/
 
 # PHPStorm
 .idea/**/workspace.xml

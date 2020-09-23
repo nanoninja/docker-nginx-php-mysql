@@ -239,6 +239,7 @@ When developing, you can use [Makefile](https://en.wikipedia.org/wiki/Make_(soft
 | mysql-restore | Restore backup of all databases              |
 | phpmd         | Analyse the API with PHP Mess Detector       |
 | test          | Test application with phpunit                |
+| init-laravel  | Create Laravel app structure                 |
 
 ### Examples
 
