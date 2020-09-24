@@ -21,5 +21,8 @@ nbproject/
 /nbproject/private/
 /nbproject/private/private.properties
 
+# VSCode
+.vscode/
+
 # SSL Certs
 etc/ssl/
