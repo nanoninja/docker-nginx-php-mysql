@@ -27,7 +27,7 @@ init:
 	@$(shell cp -n $(shell pwd)/web/app/composer.json.dist $(shell pwd)/web/app/composer.json 2> /dev/null)
 
 apidoc:
-	@docker-compose exec -T php php -d memory_limit=256M -d xdebug.profiler_enable=0 ./app/vendor/bin/apigen generate app/src --destination app/doc
+	@docker run --rm -v $(shell pwd):/data phpdoc/phpdoc -i=vendor/ -d /data/web/app/src -t /data/web/app/doc
 	@make resetOwner
 
 clean:
@@ -70,8 +70,7 @@ mysql-restore:
 phpmd:
 	@docker-compose exec -T php \
 	./app/vendor/bin/phpmd \
-	./app/src \
-	text cleancode,codesize,controversial,design,naming,unusedcode
+	./app/src text cleancode,codesize,controversial,design,naming,unusedcode
 
 test: code-sniff
 	@docker-compose exec -T php ./app/vendor/bin/phpunit --colors=always --configuration ./app/
