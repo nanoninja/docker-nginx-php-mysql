@@ -1,13 +1,11 @@
 {
     "require": {
-
+        "symfony/yaml": "^5.1"
     },
     "require-dev": {
-        "apigen/apigen": "dev-master",
         "phpmd/phpmd": "@stable",
-        "phpunit/phpunit": "^7.0",
-        "roave/better-reflection": "dev-master",
-        "squizlabs/php_codesniffer": "3.*"
+        "phpunit/phpunit": "^9.0",
+        "squizlabs/php_codesniffer": "3.5.*"
     },
     "autoload": {
         "psr-4": {
